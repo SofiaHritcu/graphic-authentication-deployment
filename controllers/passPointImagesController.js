@@ -8,20 +8,20 @@ const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 
 // Init gfs
-let drawingsGridFsStream, drawingsGridFsStreamBucket;
+let passPointImagesGridFsStream, passPointImagesGridFsStreamBucket;
 
 // bring in the database configs and connect to the db
 const db = require("../config/keys").mongoURI;
 // create a new connection to the db
-const drawingsConn = mongoose.createConnection(db);
+const passPointImagesConn = mongoose.createConnection(db);
 // initialize the gridFsStream
-drawingsConn.once("open", () => {
-  drawingsGridFsStream = Grid(drawingsConn.db, mongoose.mongo);
-  drawingsGridFsStream.collection("drawings");
+passPointImagesConn.once("open", () => {
+  passPointImagesGridFsStream = Grid(passPointImagesConn.db, mongoose.mongo);
+  passPointImagesGridFsStream.collection("pass_point_images");
 });
 
-// create the storage object for the drawings bucket
-const drawingsStorage = new GridFsStorage.GridFsStorage({
+// create the storage object for the pass point images bucket
+const passPointImagesStorage = new GridFsStorage.GridFsStorage({
   url: db,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ const drawingsStorage = new GridFsStorage.GridFsStorage({
         const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename,
-          bucketName: "drawings",
+          bucketName: "pass_point_images",
         };
         resolve(fileInfo);
       });
@@ -41,27 +41,27 @@ const drawingsStorage = new GridFsStorage.GridFsStorage({
   },
 });
 
-module.exports.uploadDrawings = multer({
-  storage: drawingsStorage,
+module.exports.uploadPassPointImages = multer({
+  storage: passPointImagesStorage,
 });
 
-// --------------- drawings -----------------------
+// --------------- pass point images -----------------------
 /**
- * @route POST ga/api/drawings/drawings
- * @desc Uploads a drawing in the drawings bucket
+ * @route POST ga/api/pass_point/upload_image
+ * @desc Uploads a image in the pass-point bucket
  * @access Public
  */
-module.exports.drawing_upload_post = (req, res) => {
+module.exports.pass_point_image_upload_post = (req, res) => {
   res.status(200).json({ success: true, file: req.file });
 };
 
 /**
- * @route GET ga/api/drawings/drawings
- * @desc Getting all of the files from the drawings
+ * @route GET ga/api/pass_point/images
+ * @desc Getting all of the files from the pass-point images
  * @access Public
  */
-module.exports.drawings_get = (req, res) => {
-  drawingsGridFsStream.files.find().toArray((err, files) => {
+module.exports.pass_point_images_get = (req, res) => {
+  passPointImagesGridFsStream.files.find().toArray((err, files) => {
     // check if files exist
     if (!files || files.length === 0) {
       return res.status(404).json({
@@ -70,17 +70,17 @@ module.exports.drawings_get = (req, res) => {
     }
 
     // files exist
-    return res.json({ success: true, drawings: files });
+    return res.json({ success: true, images: files });
   });
 };
 
 /**
- * @route GET ga/api/drawings/drawing/:filename
- * @desc Getting a specific file from drawings
+ * @route GET ga/api/pass_point/image/:filename
+ * @desc Getting a specific file from pass-point images
  * @access Public
  */
-module.exports.drawing_get = (req, res) => {
-  drawingsGridFsStream.files.findOne(
+module.exports.pass_point_image_get = (req, res) => {
+  passPointImagesGridFsStream.files.findOne(
     { filename: req.params.filename },
     (err, file) => {
       if (!file || file.length === 0) {
@@ -90,18 +90,18 @@ module.exports.drawing_get = (req, res) => {
       }
 
       // file exist
-      return res.json({ success: true, drawing: file });
+      return res.json({ success: true, image: file });
     }
   );
 };
 
 /**
- * @route GET ga/api/drawings/drawing_actual/:filename
- * @desc Getting the actual image from the drawings
+ * @route GET ga/api/pass_point/image_actual/:filename
+ * @desc Getting the actual image from the pass-point images
  * @access Public
  */
-module.exports.drawing_actual_get = (req, res) => {
-  drawingsGridFsStream.files.findOne(
+module.exports.pass_point_image_actual_get = (req, res) => {
+  passPointImagesGridFsStream.files.findOne(
     { filename: req.params.filename },
     (err, file) => {
       if (!file || file.length === 0) {
@@ -117,13 +117,14 @@ module.exports.drawing_actual_get = (req, res) => {
         file.contentType === "image/gif"
       ) {
         // read the output from the stream
-        drawingsGridFsStreamBucket = new mongoose.mongo.GridFSBucket(
-          drawingsConn.db,
+        passPointImagesGridFsStreamBucket = new mongoose.mongo.GridFSBucket(
+          passPointImagesConn.db,
           {
-            bucketName: "drawings",
+            bucketName: "pass_point_images",
           }
         );
-        const readStream = drawingsGridFsStreamBucket.openDownloadStream(
+
+        const readStream = passPointImagesGridFsStreamBucket.openDownloadStream(
           file._id
         );
         readStream.pipe(res);

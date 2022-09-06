@@ -147,7 +147,7 @@ module.exports.uploaded_drawings_get = (req, res) => {
   UploadedBufferDrawings.find().then((uploadedBufferDrawing) => {
     if (!uploadedBufferDrawing) {
       return res.status(404).json({
-        msg: "There were no users uploaded drawings found.",
+        msg: "There were no users uploaded buffer drawings found.",
         success: false,
       });
     }

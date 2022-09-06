@@ -20,11 +20,6 @@
   ],
   "host": "http://localhost:5000",
   "basePath": "/ga/api/",
-  "tags": [
-    {
-      "name": "Users"
-    }
-  ],
   "schemes": ["http"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
@@ -97,9 +92,601 @@
           }
         }
       }
+    },
+    "/buffer_drawings/upload_drawing": {
+      "post": {
+        "tags": ["buffer drawings"],
+        "description": "Uploads a buffer drawing.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "description": "The file coresponding to the drawing to be uploaded.",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The buffer drawing has been uploaded."
+          }
+        }
+      }
+    },
+    "/buffer_drawings/drawings": {
+      "get": {
+        "tags": ["buffer drawings"],
+        "description": "Get all of the buffer drawings.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The buffer drawings are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There are no buffer drawings."
+          }
+        }
+      }
+    },
+    "/buffer_drawings/drawing/:filename": {
+      "get": {
+        "tags": ["buffer drawings"],
+        "description": "Get a specific file from buffer drawings.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the buffer drawing to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified buffer drawing is returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There is no buffer drawing with the specified filename."
+          }
+        }
+      }
+    },
+    "/buffer_drawings/buffer_drawing_actual/:filename": {
+      "get": {
+        "tags": ["buffer drawings"],
+        "description": "Get a specific actual file from buffer drawings.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the buffer drawing to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified actual buffer drawing is returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There is no actual buffer drawing with the specified filename."
+          }
+        }
+      }
+    },
+    "/buffer_drawings/uploaded_drawings": {
+      "get": {
+        "tags": ["buffer drawings"],
+        "description": "Getting all the available buffer drawings uploaded.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The uploaded buffer drawings.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There were no uploaded buffer drawings found."
+          }
+        }
+      }
+    },
+    "/drawings/upload_drawing": {
+      "post": {
+        "tags": ["drawings"],
+        "description": "Uploads a drawing.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "description": "The file coresponding to the drawing to be uploaded.",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The drawing has been uploaded."
+          }
+        }
+      }
+    },
+    "/drawings/drawings": {
+      "get": {
+        "tags": ["drawings"],
+        "description": "Getting all of the files from the drawings.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The drawings are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There are no drawings."
+          }
+        }
+      }
+    },
+    "/drawings/drawing/:filename": {
+      "get": {
+        "tags": ["drawings"],
+        "description": "Getting a specific file from drawings.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the drawing to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified drawing is returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedBufferDrawings"
+            }
+          },
+          "404": {
+            "description": "There is no drawing with the specified filename."
+          }
+        }
+      }
+    },
+    "/drawings/drawing_actual/:filename": {
+      "get": {
+        "tags": ["drawings"],
+        "description": "Get a specific actual file from drawings.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the drawing to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified actual drawing is returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UploadedDrawings"
+            }
+          },
+          "404": {
+            "description": "There is no actuals drawing with the specified filename."
+          }
+        }
+      }
+    },
+    "/images/people_faces_image": {
+      "post": {
+        "tags": ["images"],
+        "description": "Uploads an image in the people_faces bucket.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "description": "The file coresponding to the image to be uploaded.",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The image has been uploaded."
+          }
+        }
+      }
+    },
+    "/images/people_faces_images": {
+      "get": {
+        "tags": ["images"],
+        "description": "Getting all of the files from the people_faces_images.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The iamges are returned succesfully."
+          },
+          "404": {
+            "description": "There are no images."
+          }
+        }
+      }
+    },
+    "/images/people_faces_image/:filename": {
+      "get": {
+        "tags": ["drawings"],
+        "description": "Get a specific actual file from drawings.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the drawing to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified actual drawing is returned succesfully."
+          },
+          "404": {
+            "description": "There is no actuals drawing with the specified filename."
+          }
+        }
+      }
+    },
+    "/images/people_faces_actual_image/:filename": {
+      "get": {
+        "tags": ["images"],
+        "description": "Getting the actual image from the people_faces_images.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the image to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified actual image is returned succesfully."
+          },
+          "404": {
+            "description": "There is no actuals image with the specified filename."
+          }
+        }
+      }
+    },
+    "/images/uploaded_image": {
+      "post": {
+        "tags": ["images"],
+        "description": "Uploads an image in the uploaded bucket.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "description": "The file coresponding to the image to be uploaded.",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The image has been uploaded."
+          }
+        }
+      }
+    },
+    "/images/uploaded_images": {
+      "get": {
+        "tags": ["images"],
+        "description": "Getting all of the files from the uploaded_images.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The uploaded iamges are returned succesfully."
+          },
+          "404": {
+            "description": "There are no uploaded images."
+          }
+        }
+      }
+    },
+    "/images/uploaded_image/:filename": {
+      "get": {
+        "tags": ["images"],
+        "description": "Getting a specific file from uploaded_images.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the uploaded image to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified uploaded image is returned succesfully."
+          },
+          "404": {
+            "description": "There is no uploaded image with the specified filename."
+          }
+        }
+      }
+    },
+    "/images/uploaded_actual_image/:filename": {
+      "get": {
+        "tags": ["images"],
+        "description": " Getting the actual image from the uploaded_images.",
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "The fileName of the uploaded image to be fetched.",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The specified actual uploaded image is returned succesfully."
+          },
+          "404": {
+            "description": "There is no actuals uploaded image with the specified filename."
+          }
+        }
+      }
+    },
+    "/images/delete_uploaded_images": {
+      "delete": {
+        "tags": ["images"],
+        "description": "Deleting images files and chunck from the uploaded_images.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The uploaded images were deleted succesfully."
+          }
+        }
+      }
+    },
+    "/drawings/upload_users_uploaded_drawings": {
+      "post": {
+        "tags": ["users uploaded drawings"],
+        "description": "Saving the drawings uploaded by a specific user.",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "body",
+            "description": "The userName of the user's whom uploaded drawings are being saved.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uploadedDrawings",
+            "in": "body",
+            "description": "The uploaded drawings filenames of the specified user which are about to be saved.",
+            "schema": {
+              "type": "string[]"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "The user with the specified userName doesn't exist."
+          },
+          "200": {
+            "description": "The user's uploaded drawings have been saved."
+          }
+        }
+      }
+    },
+    "/drawings/users_uploaded_drawings": {
+      "get": {
+        "tags": ["users uploaded drawings"],
+        "description": "Getting all the available drawings uploaded by users.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The users' uploaded drawings are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UsersUploadedDrawings"
+            }
+          },
+          "404": {
+            "description": "There are no users' uplaoded drawings."
+          }
+        }
+      }
+    },
+    "/drawings/user_uploaded_drawings/:username": {
+      "get": {
+        "tags": ["users uploaded drawings"],
+        "description": "Getting the drawings uploaded by a specified user.",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "body",
+            "description": "The userName of the user's whom uploaded drawings are being fetched.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The user's uploaded drawings are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UsersUploadedDrawings"
+            }
+          },
+          "404": {
+            "description": "The specified user has no uploaded drawings."
+          }
+        }
+      }
+    },
+    "/images/upload_users_uploaded_images": {
+      "post": {
+        "tags": ["users uploaded images"],
+        "description": "Saving the images uploaded by a specific user.",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "body",
+            "description": "The userName of the user's whom uploaded images are being saved.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uploadedDrawings",
+            "in": "body",
+            "description": "The uploaded images filenames of the specified user which are about to be saved.",
+            "schema": {
+              "type": "string[]"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "400": {
+            "description": "The user with the specified userName doesn't exist."
+          },
+          "200": {
+            "description": "The user's uploaded images have been saved."
+          }
+        }
+      }
+    },
+    "/images/users_uploaded_images": {
+      "get": {
+        "tags": ["users uploaded images"],
+        "description": "Getting all the available images uploaded by users.",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The users' uploaded images are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UsersUploadedImages"
+            }
+          },
+          "404": {
+            "description": "There are no users' uplaoded images."
+          }
+        }
+      }
+    },
+    "/drawings/user_uploaded_images/:username": {
+      "get": {
+        "tags": ["users uploaded images"],
+        "description": "Getting the images uploaded by a specified user.",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "body",
+            "description": "The userName of the user's whom uploaded images are being fetched.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The user's uploaded images are returned succesfully.",
+            "schema": {
+              "$ref": "#/definitions/UsersUploadedImages"
+            }
+          },
+          "404": {
+            "description": "The specified user has no uploaded images."
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "BearerUser": {
+      "required": ["success", "token", "msg"],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "token": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "IconsCategory": {
+      "required": ["_id", "category", "icons"],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "category": {
+          "type": "string"
+        },
+        "icons": {
+          "type": "string[]"
+        }
+      }
+    },
+    "ImagesCategory": {
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "type": "string"
+        }
+      }
+    },
+    "UploadedBufferDrawings": {
+      "required": ["bufferDrawingsFilenames"],
+      "properties": {
+        "bufferDrawingsFilenames": {
+          "type": "string[]"
+        }
+      }
+    },
     "User": {
       "required": [
         "_id",
@@ -132,43 +719,27 @@
         }
       }
     },
-    "BearerUser": {
-      "required": ["success", "token", "msg"],
+    "UsersUploadedDrawings": {
+      "required": ["userName", "uploadedDrawings"],
       "properties": {
-        "success": {
-          "type": "boolean"
-        },
-        "token": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "msg": {
-          "type": "string"
-        }
-      }
-    },
-    "IconCategory": {
-      "required": ["_id", "category", "icons"],
-      "properties": {
-        "_id": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "category": {
+        "userName": {
           "type": "string"
         },
-        "icons": {
+        "uploadedDrawings": {
           "type": "string[]"
         }
       }
     },
-    "Users": {
-      "type": "array",
-      "$ref": "#/definitions/User"
-    },
-    "IconCategories": {
-      "type": "array",
-      "$ref": "#/definitions/IcontCategory"
+    "UsersUploadedImages": {
+      "required": ["userName", "uploadedImages"],
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "uploadedImages": {
+          "type": "string[]"
+        }
+      }
     }
   }
 }

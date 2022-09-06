@@ -14,7 +14,7 @@ module.exports.users_uploaded_drawings_post = (req, res) => {
     userName,
   }).then((user) => {
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         msg: "User with specified username does not exist.",
       });
     }

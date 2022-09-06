@@ -24,6 +24,11 @@ router.get(
   imagesController.people_faces_actual_image_get
 );
 
+router.get(
+  "/people_faces_images/buffer",
+  imagesController.people_faces_images_buffer_get
+);
+
 // ---------------------- uploaded -------------
 router.post(
   "/upload_uploaded",
